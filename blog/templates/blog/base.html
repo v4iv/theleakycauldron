@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>The Leaky Cauldron</title>
+    <meta name="author" content="Vaibhav Sharma">
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
+</head>
+<body>
+<div class="site">
+    <div class="site-header">
+        <header>
+            <hgroup>
+                <h1>The Leaky Cauldron</h1>
+
+                <h2>Vaibhav's Official Blog</h2>
+            </hgroup>
+        </header>
+    </div>
+    <div class="site-nav">
+        <nav>
+            <ul>
+                <li><a href="/">Read</a></li>
+                <li><a href="{% url "blog.views.post_new" %}">Write</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="site-content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <div class="site-footer">
+        <footer>
+            Created by <a href="https://twitter.com/vaibhaved" target="_blank">@vaibhaved</a> . &copy; 2015 Vaibhav Sharma. All Rights Reserved(unless explicitly specified).
+        </footer>
+    </div>
+</div>
+</body>
+</html>

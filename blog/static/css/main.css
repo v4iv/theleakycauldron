@@ -1,0 +1,141 @@
+*{
+  padding: 0px;
+  margin: 0px;
+  font-family: Calibri;
+}
+body,header,hgroup,nav,div,span,section,aside,article,footer{
+  display: block;
+}
+.site{
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+  -webkit-box-flex: 1;
+}
+.site-header{
+  padding: 20px;
+  text-align: center;
+  color: White;
+  background-color: DarkGray;
+}
+.site-header h1{
+  font-family: Arial;
+  font-size: 5em;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+.site-nav{
+  padding: 10px;
+  background-color: Gray;
+  text-align: center;
+}
+.site-nav li{
+  display: inline-block;
+  list-style: none;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.site-nav a{
+  color: White;
+  font-size: 2em;
+  letter-spacing: 3px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.site-nav a:hover{
+  color: DarkGray;
+}
+.site-content{
+  width: auto;
+  padding: 20px;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-flex: 1;
+}
+.site-content-maincontent{
+  padding: 10px;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+}
+.site-content-maincontent article{
+  padding-bottom: 10px;
+  line-height: 2;
+  letter-spacing: 1px;
+}
+.site-content-maincontent header{
+  font-size: 2em;
+  color: Gray;
+}
+.site-content-maincontent a{
+  color: Gray;
+  text-decoration: none;
+}
+.site-content-maincontent a:hover{
+  color: DarkSlateGray;
+}
+.site-content-maincontent p{
+  color: DarkSlateGray;
+}
+.site-content-maincontent footer{
+  text-align: right;
+  color: Teal;
+}
+.post-form{
+  width: 100%;
+}
+.post-form textarea, .post-form input{
+  width: 100%
+}
+.post-form button{
+  background: Gray;
+  border-radius: 5px;
+	padding:5px 10px;
+	font-size: 1.5em;
+  color: white;
+	float: right;
+}
+.site-content-sidecontent{
+  padding: 10px;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+}
+.site-content-sidecontent header{
+  padding: 10px;
+  background-color: Gray;
+  color: White;
+  border-radius: 3px;
+}
+.site-content-sidecontent p{
+  padding: 10px;
+}
+.site-content-sidecontent nav{
+  padding: 10px;
+}
+.site-content-sidecontent li{
+  padding: 10px;
+  list-style: circle;
+  list-style-position: inside;
+  font-size: 1.2em;
+}
+.site-content-sidecontent a{
+  text-decoration: none;
+  color: Gray;
+}
+.site-content-sidecontent a:hover{
+  text-decoration: none;
+  color: Teal;
+}
+.site-footer{
+  padding: 30px;
+  text-align: center;
+  letter-spacing: 2px;
+  border-top: 1px solid DarkGray;
+}
+.site-footer a{
+  color: cyan;
+  text-decoration: none;
+}
+.site-footer a:hover{
+  color: Teal;
+}

@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="site-content-maincontent">
+    <section>
+        {% for post in posts %}
+        <article>
+            <header>
+                <h1><a href="{% url "blog.views.post_detail" pk=post.pk %}">{{ post.title }}</a></h1>
+            </header>
+            <p>{{ post.content|linebreaks }}</p>
+            <footer>
+                Published : {{ post.published_date }}
+            </footer>
+        </article>
+        {% endfor %}
+    </section>
+</div>
+<div class="site-content-sidecontent">
+    <aside>
+        <article>
+            <header><h2>About Vaibhav</h2></header>
+            <p>Vaibhav Sharma is a Computer Science Engineering student who loves Coding, Music and
+                Dinosaurs.</p>
+        </article>
+        <article>
+            <header><h2>Topics</h2></header>
+            <nav>
+                <ul>
+                    {% for post in posts %}
+                    <li><a href="{% url "blog.views.post_detail" pk=post.pk %}">{{ post.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </article>
+        <article>
+            <header><h2>Find Me On</h2></header>
+            <nav>
+                <ul>
+                    <li><a href="https://twitter.com/vaibhaved" target="_blank">Twitter</a></li>
+                    <li><a href="https://facebook.com/jazz.vebs" target="_blank">Facebook</a></li>
+                    <li><a href="https://github.com/v4iv" target="_blank">Github</a></li>
+                </ul>
+            </nav>
+        </article>
+    </aside>
+</div>
+{% endblock content %}

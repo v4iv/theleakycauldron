@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="site-content-maincontent">
+    <section>
+        <article>
+            {% if post.published_date %}
+            <header>
+                <h1>{{ post.title }}</h1>
+            </header>
+            <p>{{ post.content|linebreaks }}</p>
+            <footer>
+                Published : {{ post.published_date }}
+            </footer>
+            {% endif %}
+        </article>
+    </section>
+</div>
+{% endblock content %}
