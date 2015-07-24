@@ -25,6 +25,11 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
   text-transform: uppercase;
   letter-spacing: 3px;
 }
+.site-header a{
+  font-family: Arial;
+  color: White;
+  text-decoration:none;
+}
 .site-nav{
   padding: 10px;
   background-color: Gray;
@@ -80,6 +85,9 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
 .site-content-maincontent footer{
   text-align: right;
   color: Teal;
+}
+.edit-btn{
+  float:right;
 }
 .post-form{
   width: 100%;
