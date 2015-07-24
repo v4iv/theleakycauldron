@@ -10,16 +10,29 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
 </head>
 <body>
+<!--Google Analytics-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65577118-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!--Google Analytics-->
 <div class="site">
     <div class="site-header">
         <header>
             <hgroup>
-                <h1>The Leaky Cauldron</h1>
+                <h1><a href="/">The Leaky Cauldron</a></h1>
 
                 <h2>Vaibhav's Official Blog</h2>
             </hgroup>
         </header>
     </div>
+    {% if user.is_authenticated %}
     <div class="site-nav">
         <nav>
             <ul>
@@ -28,13 +41,15 @@
             </ul>
         </nav>
     </div>
+    {% endif %}
     <div class="site-content">
         {% block content %}
         {% endblock content %}
     </div>
     <div class="site-footer">
         <footer>
-            Created by <a href="https://twitter.com/vaibhaved" target="_blank">@vaibhaved</a> . &copy; 2015 Vaibhav Sharma. All Rights Reserved(unless explicitly specified).
+            Created by <a href="https://twitter.com/vaibhaved" target="_blank">@vaibhaved</a> . &copy; 2015 Vaibhav
+            Sharma. All Rights Reserved(unless explicitly specified).
         </footer>
     </div>
 </div>
