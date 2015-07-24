@@ -76,6 +76,11 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
   font-size: 2em;
   color: Gray;
 }
+.site-content-maincontent h2{
+  float: right;
+  font-size: 1em;
+  color: Gray;
+}
 .site-content-maincontent a{
   color: Gray;
   text-decoration: none;
@@ -84,7 +89,18 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
   color: DarkSlateGray;
 }
 .site-content-maincontent p{
+    clear:both;
   color: DarkSlateGray;
+}
+.site-content-maincontent nav{
+    padding-top: 5px;
+    display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-flex: 1;
+}
+.site-content-maincontent li{
+    display: inline-block;
+    padding: 5px;
 }
 .site-content-maincontent footer{
   text-align: right;

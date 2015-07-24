@@ -1,13 +1,23 @@
 {% extends "blog/base.html" %}
+{% load staticfiles %}
 {% block content %}
-<div class="site-content-maincontent">
+<div class="site-content-maincontent" xmlns:https="http://www.w3.org/1999/xhtml">
     <section>
         {% for post in posts %}
         <article>
             <header>
                 <h1><a href="{% url "blog.views.post_detail" pk=post.pk %}">{{ post.title }}</a></h1>
+                <h2>- {{ post.author }}</h2>
             </header>
             <p>{{ post.content|linebreaks }}</p>
+            <nav>
+                <h5>Share On :</h5>
+                <ul>
+                    <li><a href="https://twitter.com/home?status=The%20Leaky%20Cauldron%20:%0Ahttp://v4iv.pythonanywhere.com{% url "blog.views.post_detail" pk=post.pk %}" target="_blank"><img src="{% static "img/twitter.jpg" %}" alt="Twitter" onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseover="this.style.opacity=0.6;this.filters.alpha.opacity=60"/></a></li>
+                    <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://v4iv.pythonanywhere.com{% url "blog.views.post_detail" pk=post.pk %}" target="_blank"><img src="{% static "img/facebook.jpg" %}" alt="Facebook" onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseover="this.style.opacity=0.6;this.filters.alpha.opacity=60"/></a></li>
+                    <li><a href="https://plus.google.com/share?url=http://v4iv.pythonanywhere.com{% url "blog.views.post_detail" pk=post.pk %}" target="_blank"><img src="{% static "img/googleplus.jpg" %}" alt="Google +" onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseover="this.style.opacity=0.6;this.filters.alpha.opacity=60"/></a></li>
+                </ul>
+            </nav>
             <footer>
                 Published : {{ post.published_date }}
             </footer>
@@ -19,8 +29,7 @@
     <aside>
         <article>
             <header><h2>About Vaibhav</h2></header>
-            <p>Vaibhav Sharma is a Computer Science Engineering student who loves Coding, Music and
-                Dinosaurs.</p>
+            <p><a href="http://www.vaibhav-sharma.me/" target="_blank">Vaibhav Sharma</a> is a Computer Science Engineering student who loves Arts, Books, Music and Coding.</p>
         </article>
         <article>
             <header><h2>Topics</h2></header>

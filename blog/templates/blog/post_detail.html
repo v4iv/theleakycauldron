@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load staticfiles %}
 {% block content %}
 <div class="site-content-maincontent">
     <section>
@@ -9,8 +10,17 @@
                 <a class="edit-btn" href="{% url "post_edit" pk=post.pk %}">Edit</a>
                 {% endif %}
                 <h1>{{ post.title }}</h1>
+                <h2>- {{ post.author }}</h2>
             </header>
             <p>{{ post.content|linebreaks }}</p>
+            <nav>
+                <h5>Share On :</h5>
+                <ul>
+                    <li><a href="https://twitter.com/home?status=The%20Leaky%20Cauldron%20:%0Ahttp://v4iv.pythonanywhere.com{% url "blog.views.post_detail" pk=post.pk %}" target="_blank"><img src="{% static "img/twitter.jpg" %}" alt="Twitter" onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseover="this.style.opacity=0.6;this.filters.alpha.opacity=60"/></a></li>
+                    <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://v4iv.pythonanywhere.com{% url "blog.views.post_detail" pk=post.pk %}" target="_blank"><img src="{% static "img/facebook.jpg" %}" alt="Facebook" onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseover="this.style.opacity=0.6;this.filters.alpha.opacity=60"/></a></li>
+                    <li><a href="https://plus.google.com/share?url=http://v4iv.pythonanywhere.com{% url "blog.views.post_detail" pk=post.pk %}" target="_blank"><img src="{% static "img/googleplus.jpg" %}" alt="Google +" onmouseout="this.style.opacity=1;this.filters.alpha.opacity=100" onmouseover="this.style.opacity=0.6;this.filters.alpha.opacity=60"/></a></li>
+                </ul>
+            </nav>
             <footer>
                 Published : {{ post.published_date }}
             </footer>
