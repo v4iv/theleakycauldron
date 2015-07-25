@@ -6,9 +6,13 @@
 body,header,hgroup,nav,div,span,section,aside,article,footer{
   display: block;
 }
+body{
+	width:100%;
+	display: -webkit-box;
+	-webkit-box-pack: center;
+}
 .site{
   width: 100%;
-  min-width: 400px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-box-pack: center;
@@ -19,6 +23,10 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
   text-align: center;
   color: White;
   background-color: DarkGray;
+}
+.site-header header{
+  width:100%;
+  position: relative;
 }
 .site-header h1{
   font-family: Arial;
@@ -93,8 +101,8 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
   color: DarkSlateGray;
 }
 .site-content-maincontent nav{
-    padding-top: 5px;
-    display: -webkit-box;
+  padding-top: 5px;
+  display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-flex: 1;
 }
@@ -114,6 +122,7 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
 }
 .post-form textarea, .post-form input{
   width: 100%
+
 }
 .post-form button{
   background: Gray;
@@ -166,4 +175,23 @@ body,header,hgroup,nav,div,span,section,aside,article,footer{
 }
 .site-footer a:hover{
   color: Teal;
+}
+@media screen and (max-width:720px) {
+    .site-header h1{
+      font-size: 2em;
+    }
+    .site-header h2{
+      font-size: 1em;
+    }
+	.site-nav nav{
+		position: static;
+	}
+
+	.site-nav li {
+	    font-size: 1em;
+		display: block;
+	}
+	.site-content{
+		-webkit-box-orient: vertical;
+	}
 }
