@@ -24,6 +24,20 @@ body{
   color: White;
   background-color: DarkGray;
 }
+.follow{
+  text-align:right;
+  right:10px;
+  top:3px;
+  padding:3px;
+  letter-spacing:2px;
+  background: White;
+  position: absolute;
+  z-index: 1;
+  border: 1px solid #404040;
+}
+.follow a{
+  color: Gray;
+}
 .site-header header{
   width:100%;
   position: relative;
@@ -34,7 +48,7 @@ body{
   text-transform: uppercase;
   letter-spacing: 3px;
 }
-.site-header a{
+.site-header h1 a{
   font-family: Arial;
   color: White;
   text-decoration:none;
