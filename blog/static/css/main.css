@@ -25,6 +25,7 @@ body{
   background-color: DarkGray;
 }
 .follow{
+  box-shadow: DimGray 1px 1px 3px;
   text-align:right;
   right:10px;
   top:10px;
@@ -33,7 +34,7 @@ body{
   background: gray;
   position: absolute;
   z-index: 1;
-  border: 2px solid Gray;
+  border: 1px solid Gray;
   border-radius:4px;
 }
 .follow a{
@@ -122,6 +123,10 @@ body{
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-flex: 1;
+}
+.site-content-maincontent nav img{
+  background: white;
+  border-radius: 18px;
 }
 .site-content-maincontent li{
     display: inline-block;
