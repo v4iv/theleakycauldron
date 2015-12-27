@@ -25,6 +25,7 @@ body{
   background-color: DarkGray;
 }
 .follow{
+  box-shadow: DimGray 1px 1px 3px;
   text-align:right;
   right:10px;
   top:10px;
