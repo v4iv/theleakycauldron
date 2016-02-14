@@ -4,14 +4,13 @@
 <div class="follow"><a href="#topics" >TOPICS</a></div>
 <div class="site-content-maincontent" xmlns:https="http://www.w3.org/1999/xhtml">
     <section>
-        <h1>Competition</h1>
         {% for post in posts %}
         <article>
             <header>
                 <h1 ><a href="{% url "blog.views.post_detail" pk=post.pk %}">{{ post.title }}</a></h1>
                 <h2>- {{ post.author }}</h2>
             </header>
-            <p>{{ post.content|linebreaks }}</p>
+            <p>{{ post.content|truncatechars:400|linebreaks }}<a href="{% url "blog.views.post_detail" pk=post.pk %}">Read More</a></p>
             <nav>
                 <h5>Share On :</h5>
                 <ul>
