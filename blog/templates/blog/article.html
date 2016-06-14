@@ -1,0 +1,48 @@
+{% extends "blog/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div class="inner">
+        <header>
+            <h1>{{ article.title }}</h1>
+            {% if user.is_authenticated %}
+                <ul class="actions">
+                    <li><a href="{% url 'edit_article' pk=article.pk %}" class="button small icon fa-pencil">Edit</a>
+                    </li>
+                    <li><a href="{% url 'delete_article' pk=article.pk %}" class="button small icon fa-trash">Delete</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </header>
+        <span class="image main"><img src="{{ article.image.url }}" alt="{{ article.title }}"/></span>
+        {{ article.content|linebreaks }}
+        <hr></hr>
+        <footer>
+            <meta name="tags" content="{{ article.tags }}">
+            <section class="pull-left">
+                <h4>Published : {{ article.published_date }}</h4>
+            </section>
+            <section>
+                <ul class="icons pull-right">
+                    <li>Share On :</li>
+                    <li>
+                        <a href="https://twitter.com/home?status=The%20Leaky%20Cauldron%20:%0Ahttp://theleakycauldron.pythonanywhere.com{% url '
+                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-twitter" target="_blank"><span
+                                class="label">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=http://theleakycauldron.pythonanywhere.com{% url '
+                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-facebook" target="_blank"><span
+                                class="label">Facebook</span></a>
+                    </li>
+                    <li><a href="https://plus.google.com/share?url=http://theleakycauldron.pythonanywhere.com{% url '
+                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-google-plus"
+                           target="_blank"><span
+                            class="label">Google +</span></a></li>
+                    <li><a href="whatsapp://send?text={{ article.title }} {% url '
+                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-whatsapp"><span class="label">Whatsapp</span></a>
+                    </li>
+                </ul>
+            </section>
+        </footer>
+    </div>
+{% endblock content %}

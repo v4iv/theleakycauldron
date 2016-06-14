@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div class="inner">
+        <section>
+            <h1>{{ title }}</h1>
+
+            {% for contact in contacts %}
+                <article>
+                    <header>
+                        <h3>{{ contact.name }}</h3>
+                        <ul class="actions">
+                            <li><a href="{% url 'delete_contact' pk=contact.pk %}" class="button small icon fa-trash">Delete</a>
+                            </li>
+                        </ul>
+                    </header>
+                    <p>{{ contact.message }}</p>
+                    <footer>
+                        <section class="pull-left">Email : <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                        </section>
+                        <section class="pull-right">{{ contact.contact_date }}</section>
+                    </footer>
+                </article>
+            {% endfor %}
+        </section>
+        <section>
+            <!-- Pagination -->
+            <ul class="actions pull-right">
+                {% if contacts.has_previous %}
+                    <li><a href="?page={{ contacts.previous_page_number }}" class="button special previous">Previous
+                        Page</a></li>
+                {% else %}
+                {% endif %}
+
+                {% if contacts.has_next %}
+                    <li><a href="?page={{ contacts.next_page_number }}" class="button special next">Next Page</a></li>
+                {% else %}
+                {% endif %}
+            </ul>
+        </section>
+    </div>
+{% endblock content %}

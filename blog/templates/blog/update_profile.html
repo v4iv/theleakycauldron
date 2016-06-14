@@ -1,0 +1,35 @@
+{% extends "blog/base.html" %}
+{% load admin_static %}
+{% load staticfiles %}
+{% block content %}
+    <script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+    <div class="inner">
+        <h2>{{ title }}</h2>
+        <section>
+            <form method="post" action="" enctype="multipart/form-data" xmlns="http://www.w3.org/1999/html">
+                {% csrf_token %}
+                <div class="field half first">
+                    {{ about_form.display_picture }}
+                </div>
+                <div class="field half">
+                    <a id='calendarlink0' href="javascript:DateTimeShortcuts.openCalendar(0);">{{ about_form.dob }}</a>
+                </div>
+                <div class="field">
+                    {{ about_form.profession }}
+                </div>
+                <div class="field">
+                    {{ about_form.interests }}
+                </div>
+                <div class="field">
+                    {{ about_form.expertise }}
+                </div>
+                <div class="field">
+                    Resume Link : {{ about_form.resume }}
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Update" class="special"/></li>
+                </ul>
+            </form>
+        </section>
+    </div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="inner">
+        <h2>GET IN TOUCH</h2>
+        <section>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="field half first">
+                    {{ contact_form.name }}
+                </div>
+                <div class="field half">
+                    {{ contact_form.email }}
+                </div>
+                <div class="field">
+                    {{ contact_form.message }}
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Send" class="special"/></li>
+                </ul>
+            </form>
+        </section>
+    </div>
+{% endblock content %}

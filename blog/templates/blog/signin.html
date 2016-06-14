@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div class="inner">
+        <img src="{% static 'images/neko.jpg' %}" class="image right">
+
+        <h1>{{ title }}</h1>
+        <section>
+
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert"><p class="validation-summary-errors">Invalid Username
+                        or
+                        Password!</p></div>
+                {% endif %}
+                <div class="field half">
+                    {{ form.username }}
+                </div>
+                <div class="field half">
+                    {{ form.password }}
+                </div>
+                <div class="field half">
+                    <ul class="actions pull-right">
+                        <li><input type="hidden" name="next" value="/"/></li>
+                        <li><input type="submit" value="Sign In" class="button fit special"/></li>
+                    </ul>
+                </div>
+            </form>
+        </section>
+    </div>
+{% endblock content %}

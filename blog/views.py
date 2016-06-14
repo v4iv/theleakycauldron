@@ -1,40 +1,130 @@
+import random
+
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post
-from .forms import PostForm
+
+from .forms import ArticleForm, ContactForm, AboutForm
+from .models import Article, Contact, About
+
 
 # Create your views here.
-def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'blog/posts.html', {'title': 'Home', 'posts' : posts})
+def home(request):
+    article_list = Article.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    paginator = Paginator(article_list, 9)
+    page = request.GET.get('page')
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page('1')
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+    return render(request, 'blog/index.html', {'title': 'Home', 'year': timezone.now().year, 'articles': articles})
 
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'title': post.title, 'post': post})
 
-def post_new(request):
+def full_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    return render(request, 'blog/article.html',
+                  {'title': article.title, 'article': article, 'year': timezone.now().year})
+
+
+@login_required(login_url='signin')
+def new_article(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('blog.views.post_detail', pk=post.pk)
+            style_choice = ['style1', 'style2', 'style3', 'style4', 'style5', 'style6']
+            article = form.save(commit=False)
+            article.author = request.user
+            article.style = random.choice(style_choice)
+            article.published_date = timezone.now()
+            article.save()
+            return HttpResponseRedirect(reverse('article', args=(article.pk,)))
     else:
-        form = PostForm()
-        return render(request, 'blog/post_edit.html', {'title': 'New', 'form':form})
+        form = ArticleForm()
+    return render(request, 'blog/edit_article.html',
+                  {'title': 'New Article', 'form': form, 'year': timezone.now().year})
 
-def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+
+@login_required(login_url='signin')
+def edit_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('blog.views.post_detail', pk=post.pk)
+            article = form.save(commit=False)
+            article.author = request.user
+            article.last_edited = timezone.now()
+            article.save()
+            return HttpResponseRedirect(reverse('article', args=(article.pk,)))
     else:
-        form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'title': 'Edit', 'form': form})
+        form = ArticleForm(instance=article)
+    return render(request, 'blog/edit_article.html',
+                  {'title': 'Edit Article', 'form': form, 'year': timezone.now().year})
+
+
+@login_required(login_url='signin')
+def delete_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    article.delete()
+    return redirect('/')
+
+
+def contact_me(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.contact_date = timezone.now()
+            contact.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = ContactForm()
+        return render(request, 'blog/contact.html',
+                      {'title': 'Contact Me', 'year': timezone.now().year, 'contact_form': form})
+
+
+@login_required(login_url='signin')
+def messages(request):
+    contact_list = Contact.objects.filter(contact_date__lte=timezone.now()).order_by('-contact_date')
+    paginator = Paginator(contact_list, 9)
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        contacts = paginator.page('1')
+    except EmptyPage:
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, 'blog/messages.html',
+                  {'title': 'Messages', 'year': timezone.now().year, 'contacts': contacts})
+
+
+@login_required(login_url='signin')
+def delete_contact(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    contact.delete()
+    return redirect('/')
+
+
+def about_me(request):
+    about = About.objects.get()
+    return render(request, 'blog/about.html', {'title': 'About Me', 'year': timezone.now().year, 'about': about})
+
+
+@login_required(login_url='signin')
+def update_profile(request, pk):
+    about = get_object_or_404(About, pk=pk)
+    if request.method == "POST":
+        form = AboutForm(request.POST, request.FILES, instance=about)
+        if form.is_valid():
+            about = form.save(commit=False)
+            about.last_edited = timezone.now()
+            about.save()
+            return HttpResponseRedirect(reverse('about', args=(about.pk,)))
+    else:
+        form = AboutForm(instance=about)
+    return render(request, 'blog/update_profile.html',
+                  {'title': 'Update Profile', 'about_form': form, 'year': timezone.now().year})

@@ -1,0 +1,46 @@
+{% extends "blog/base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block content %}
+    <div class="inner">
+        <header>
+            <h1>Official blog of <a href="{% url 'about_me' %}">Vaibhav Sharma</a></h1>
+
+            <p>I publish my works and random posts on art, technology, coding, and other interesting thing.</p>
+        </header>
+        <section class="tiles">
+            {% for article in articles %}
+                <article class="{{ article.style }}">
+									<span class="image">
+                                        {% thumbnail article.image "353x326" crop="center" as thumb %}
+                                            <img src="{{ thumb.url }}"
+                                                 alt="{{ article.title }}"/>
+                                        {% endthumbnail %}
+                                                </span>
+                    <a href="{% url 'blog.views.full_article' pk=article.pk %}">
+                        <h2>{{ article.title }}</h2>
+
+                        <div class="content">
+                            <p>{{ article.content|truncatechars:75|linebreaks }}</p>
+                        </div>
+                    </a>
+                </article>
+            {% endfor %}
+        </section>
+        <section>
+            <!-- Pagination -->
+            <ul class="actions pull-right">
+                {% if articles.has_previous %}
+                    <li><a href="?page={{ articles.previous_page_number }}" class="button special previous">Previous
+                        Page</a></li>
+                {% else %}
+                {% endif %}
+
+                {% if articles.has_next %}
+                    <li><a href="?page={{ articles.next_page_number }}" class="button special next">Next Page</a></li>
+                {% else %}
+                {% endif %}
+            </ul>
+        </section>
+    </div>
+{% endblock content %}

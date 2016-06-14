@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="inner">
+        <h1>{{ title }}</h1>
+        <section>
+            <form method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="field">
+                    {{ form.title }}
+                </div>
+                <div class="field">
+                    {{ form.image }}
+                </div>
+                <div class="field">
+                    {{ form.content }}
+                </div>
+                <div class="field">
+                    {{ form.tags }}
+                </div>
+                <ul class="actions pull-right">
+                    <li><input type="submit" value="Publish" class="button special fit"/></li>
+                </ul>
+            </form>
+        </section>
+    </div>
+{% endblock content %}
