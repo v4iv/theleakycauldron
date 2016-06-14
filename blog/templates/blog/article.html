@@ -25,21 +25,19 @@
                 <ul class="icons pull-right">
                     <li>Share On :</li>
                     <li>
-                        <a href="https://twitter.com/home?status=The%20Leaky%20Cauldron%20:%0Ahttp://theleakycauldron.pythonanywhere.com{% url '
-                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-twitter" target="_blank"><span
+                        <a href="https://twitter.com/home?status=The%20Leaky%20Cauldron%20:%0Ahttp://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}" class="icon style3 fa-twitter" target="_blank"><span
                                 class="label">Twitter</span></a>
                     </li>
                     <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=http://theleakycauldron.pythonanywhere.com{% url '
-                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-facebook" target="_blank"><span
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=http://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}" class="icon style3 fa-facebook" target="_blank"><span
                                 class="label">Facebook</span></a>
                     </li>
-                    <li><a href="https://plus.google.com/share?url=http://theleakycauldron.pythonanywhere.com{% url '
-                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-google-plus"
+                    <li>
+                        <a href="https://plus.google.com/share?url=http://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}"
+                           class="icon style3 fa-google-plus"
                            target="_blank"><span
-                            class="label">Google +</span></a></li>
-                    <li><a href="whatsapp://send?text={{ article.title }} {% url '
-                           blog.views.full_article' pk=post.pk %}" class="icon style3 fa-whatsapp"><span class="label">Whatsapp</span></a>
+                                class="label">Google +</span></a></li>
+                    <li><a href="whatsapp://send?text={{ article.title }} http://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}" class="icon style3 fa-whatsapp"><span class="label">Whatsapp</span></a>
                     </li>
                 </ul>
             </section>

@@ -77,11 +77,8 @@ WSGI_APPLICATION = 'theleakycauldron.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '<your_username>$<your_database_name>',
-        'USER': '<your_username>',
-        'PASSWORD': '<your_mysql_password>',
-        'HOST': '<your_mysql_hostname>',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
