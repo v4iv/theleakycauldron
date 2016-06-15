@@ -6,7 +6,7 @@
     <div class="inner">
         <h2>{{ title }}</h2>
         <section>
-            <form method="post" action="" enctype="multipart/form-data" xmlns="http://www.w3.org/1999/html">
+            <form method="post" action="{% url 'about_me' %}" enctype="multipart/form-data" xmlns="http://www.w3.org/1999/html">
                 {% csrf_token %}
                 <div class="field half first">
                     {{ about_form.display_picture }}
