@@ -1,12 +1,10 @@
 import random
-
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-
 from .forms import ArticleForm, ContactForm, AboutForm
 from .models import Article, Contact, About
 
@@ -14,6 +12,7 @@ from .models import Article, Contact, About
 # Create your views here.
 def home(request):
     article_list = Article.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    recent_posts = Article.objects.order_by('-published_date')[:5]
     paginator = Paginator(article_list, 9)
     page = request.GET.get('page')
     try:
@@ -22,7 +21,9 @@ def home(request):
         articles = paginator.page('1')
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
-    return render(request, 'blog/index.html', {'title': 'Home', 'year': timezone.now().year, 'articles': articles})
+    context = {'title': 'Home', 'year': timezone.now().year, 'articles': articles, 'recents': recent_posts,
+               'archives': article_list}
+    return render(request, 'blog/index.html', context)
 
 
 def full_article(request, pk):
@@ -36,10 +37,8 @@ def new_article(request):
     if request.method == "POST":
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
-            style_choice = ['style1', 'style2', 'style3', 'style4', 'style5', 'style6']
             article = form.save(commit=False)
             article.author = request.user
-            article.style = random.choice(style_choice)
             article.published_date = timezone.now()
             article.save()
             return HttpResponseRedirect(reverse('article', args=(article.pk,)))
@@ -80,11 +79,13 @@ def contact_me(request):
             contact = form.save(commit=False)
             contact.contact_date = timezone.now()
             contact.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            return HttpResponseRedirect(reverse('contact_me'))
     else:
         form = ContactForm()
         return render(request, 'blog/contact.html',
-                      {'title': 'Contact Me', 'year': timezone.now().year, 'contact_form': form})
+                      {'title': 'Get In Touch', 'year': timezone.now().year, 'form': form})
 
 
 @login_required(login_url='signin')
@@ -127,4 +128,4 @@ def update_profile(request, pk):
     else:
         form = AboutForm(instance=about)
     return render(request, 'blog/update_profile.html',
-                  {'title': 'Update Profile', 'about_form': form, 'year': timezone.now().year})
+                  {'title': 'Update Profile', 'form': form, 'year': timezone.now().year})

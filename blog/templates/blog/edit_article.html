@@ -1,26 +1,79 @@
 {% extends "blog/base.html" %}
+{% load static %}
 {% block content %}
-    <div class="inner">
-        <h1>{{ title }}</h1>
-        <section>
-            <form method="post" action="" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="field">
-                    {{ form.title }}
-                </div>
-                <div class="field">
-                    {{ form.image }}
-                </div>
-                <div class="field">
-                    {{ form.content }}
-                </div>
-                <div class="field">
-                    {{ form.tags }}
-                </div>
-                <ul class="actions pull-right">
-                    <li><input type="submit" value="Publish" class="button special fit"/></li>
-                </ul>
-            </form>
-        </section>
+    <!-- Page Header -->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
+            <h1>{{ title }}</h1>
+
+            <p>what's on your mind?</p>
+        </div>
+    </div>
+    <script>
+        tinyMCE.init({
+            mode: "textareas",
+            height: 500,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+        });
+    </script>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <p class="help-block text-danger">Invalid Entries</p>
+                    {% endif %}
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Title</label>
+                            {{ form.title }}
+
+                            <p class="help-block text-danger">{{ form.title.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Upload Image</label>
+                            {{ form.image }}
+
+                            <p class="help-block text-danger">{{ form.title.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Content</label>
+                            {{ form.content }}
+
+                            <p class="help-block text-danger">{{ form.content.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Tags</label>
+                            {{ form.tags }}
+
+                            <p class="help-block text-danger">{{ form.tags.default_error_messages }}</p>
+                        </div>
+                    </div>
+
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <input class="btn btn-group-justified btn-default" value="Publish" type="submit"/>
+                        </div>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock content %}

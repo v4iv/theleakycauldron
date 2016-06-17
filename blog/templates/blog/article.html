@@ -1,46 +1,34 @@
 {% extends "blog/base.html" %}
-{% load staticfiles %}
+{% load static %}
 {% block content %}
-    <div class="inner">
-        <header>
+    <!-- Jumbotron-->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
             <h1>{{ article.title }}</h1>
+
+            <p>Posted by <a href="{% url 'about_me' %}">{{ article.author.get_full_name }}</a>
+                on {{ article.published_date.date }}</p>
             {% if user.is_authenticated %}
-                <ul class="actions">
-                    <li><a href="{% url 'edit_article' pk=article.pk %}" class="button small icon fa-pencil">Edit</a>
+                <ul class="list-inline">
+                    <li><a class="btn btn-default btn-lg" href="{% url 'edit_article' pk=article.pk %}"
+                           role="button">Edit</a>
                     </li>
-                    <li><a href="{% url 'delete_article' pk=article.pk %}" class="button small icon fa-trash">Delete</a>
+
+                    <li><a class="btn btn-default btn-lg" href="{% url 'delete_article' pk=article.pk %}" role="button">Delete</a>
                     </li>
                 </ul>
             {% endif %}
-        </header>
-        <span class="image main"><img src="{{ article.image.url }}" alt="{{ article.title }}"/></span>
-        {{ article.content|linebreaks }}
-        <hr></hr>
-        <footer>
-            <meta name="tags" content="{{ article.tags }}">
-            <section class="pull-left">
-                <h4>Published : {{ article.published_date }}</h4>
-            </section>
-            <section>
-                <ul class="icons pull-right">
-                    <li>Share On :</li>
-                    <li>
-                        <a href="https://twitter.com/home?status=The%20Leaky%20Cauldron%20:%0Ahttp://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}" class="icon style3 fa-twitter" target="_blank"><span
-                                class="label">Twitter</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=http://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}" class="icon style3 fa-facebook" target="_blank"><span
-                                class="label">Facebook</span></a>
-                    </li>
-                    <li>
-                        <a href="https://plus.google.com/share?url=http://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}"
-                           class="icon style3 fa-google-plus"
-                           target="_blank"><span
-                                class="label">Google +</span></a></li>
-                    <li><a href="whatsapp://send?text={{ article.title }} http://theleakycauldron.pythonanywhere.com{% url 'article' pk=article.pk %}" class="icon style3 fa-whatsapp"><span class="label">Whatsapp</span></a>
-                    </li>
-                </ul>
-            </section>
-        </footer>
+        </div>
     </div>
+    <!-- Post Content -->
+    <article>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+                    <img class="img-responsive" src="{{ article.image.url }}" alt="{{ article.title }}">
+                    {{ article.content|safe }}
+                </div>
+            </div>
+        </div>
+    </article>
 {% endblock content %}

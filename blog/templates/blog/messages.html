@@ -1,42 +1,60 @@
 {% extends "blog/base.html" %}
-{% load staticfiles %}
+{% load static %}
 {% block content %}
-    <div class="inner">
-        <section>
+    <!-- Page Header -->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
             <h1>{{ title }}</h1>
 
-            {% for contact in contacts %}
-                <article>
-                    <header>
-                        <h3>{{ contact.name }}</h3>
-                        <ul class="actions">
-                            <li><a href="{% url 'delete_contact' pk=contact.pk %}" class="button small icon fa-trash">Delete</a>
-                            </li>
-                        </ul>
-                    </header>
-                    <p>{{ contact.message }}</p>
-                    <footer>
-                        <section class="pull-left">Email : <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
-                        </section>
-                        <section class="pull-right">{{ contact.contact_date }}</section>
-                    </footer>
-                </article>
-            {% endfor %}
-        </section>
-        <section>
-            <!-- Pagination -->
-            <ul class="actions pull-right">
-                {% if contacts.has_previous %}
-                    <li><a href="?page={{ contacts.previous_page_number }}" class="button special previous">Previous
-                        Page</a></li>
-                {% else %}
-                {% endif %}
+            <p>here are messages from the visitors of your blog.</p>
+        </div>
+    </div>
 
-                {% if contacts.has_next %}
-                    <li><a href="?page={{ contacts.next_page_number }}" class="button special next">Next Page</a></li>
-                {% else %}
-                {% endif %}
-            </ul>
-        </section>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {% for contact in contacts %}
+                    <div class="post-preview">
+
+                        <h2 class="post-title">
+                            {{ contact.name }}
+                        </h2>
+
+                        <h3 class="post-subtitle">
+                            {{ contact.message }}
+                        </h3>
+
+                        <p class="post-meta">Posted by <a
+                                href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                            on {{ contact.contact_date }}</p>
+
+                        <p class="post-meta"><a href="{% url 'delete_contact' pk=contact.pk %}"
+                                                class="btn btn-group-justified btn-danger glyphicon glyphicon-trash">
+                            Delete</a>
+                        </p>
+                    </div>
+                    <hr>
+                {% endfor %}
+
+                <!-- Pagination -->
+                <nav class="pull-right">
+                    <ul class="pager">
+                        {% if contacts.has_previous %}
+                            <li>
+                                <a href="?page={{ contacts.previous_page_number }}">&laquo; Previous</a>
+                            </li>
+                        {% endif %}
+
+                        {% if contacts.has_next %}
+                            <li>
+                                <a href="?page={{ contacts.next_page_number }}">Next &raquo;</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
     </div>
 {% endblock content %}

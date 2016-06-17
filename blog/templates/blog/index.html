@@ -2,45 +2,68 @@
 {% load staticfiles %}
 {% load thumbnail %}
 {% block content %}
-    <div class="inner">
-        <header>
-            <h1>Official blog of <a href="{% url 'about_me' %}">Vaibhav Sharma</a></h1>
+    <!-- Jumbotron-->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
+            <h1>The Leaky Cauldron</h1>
 
-            <p>I publish my works and random posts on art, technology, coding, and other interesting thing.</p>
-        </header>
-        <section class="tiles">
-            {% for article in articles %}
-                <article class="{{ article.style }}">
-									<span class="image">
-                                        {% thumbnail article.image "353x326" crop="center" as thumb %}
-                                            <img src="{{ thumb.url }}"
-                                                 alt="{{ article.title }}"/>
-                                        {% endthumbnail %}
-                                                </span>
-                    <a href="{% url 'blog.views.full_article' pk=article.pk %}">
-                        <h2>{{ article.title }}</h2>
+            <p>A Clean Bootstrap based blog powered by Django.</p>
 
-                        <div class="content">
-                            <p>{{ article.content|truncatechars:75|linebreaks }}</p>
-                        </div>
-                    </a>
-                </article>
-            {% endfor %}
-        </section>
-        <section>
-            <!-- Pagination -->
-            <ul class="actions pull-right">
-                {% if articles.has_previous %}
-                    <li><a href="?page={{ articles.previous_page_number }}" class="button special previous">Previous
-                        Page</a></li>
-                {% else %}
-                {% endif %}
+        </div>
+    </div>
 
-                {% if articles.has_next %}
-                    <li><a href="?page={{ articles.next_page_number }}" class="button special next">Next Page</a></li>
-                {% else %}
-                {% endif %}
-            </ul>
-        </section>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row content">
+            <div class="col-sm-3 sidenav">
+                <h4>Recent Posts</h4>
+                <ul class="nav nav-pills nav-stacked">
+                    {% for recent in recents %}
+                        <li><a href="{% url 'article' pk=recent.pk %}">{{ recent.title }}</a></li>
+                    {% endfor %}
+                </ul>
+                <hr>
+            </div>
+            <div class="col-sm-9">
+                {% for article in articles %}
+                    <div class="post-preview">
+                        <a href="{% url 'article' pk=article.pk %}">
+                            {% thumbnail article.image "847x300" crop="center" as im %}
+                                <img class="img-responsive" src="{{ im.url }}" alt="{{ article.title }}">
+                            {% endthumbnail %}
+                            <h2 class="post-title">
+                                {{ article.title }}
+                            </h2>
+
+                            <h3 class="post-subtitle">
+                                {{ article.content|truncatechars:75|safe }}
+                            </h3>
+                        </a>
+
+                        <p class="post-meta">Posted by <a
+                                href="{% url 'about_me' %}">{{ article.author.get_full_name }}</a>
+                            on {{ article.published_date.date }}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
+
+                <!-- Pagination -->
+                <nav class="pull-right">
+                    <ul class="pager">
+                        {% if articles.has_previous %}
+                            <li>
+                                <a href="?page={{ articles.previous_page_number }}">&laquo; Previous</a>
+                            </li>
+                        {% endif %}
+
+                        {% if articles.has_next %}
+                            <li>
+                                <a href="?page={{ articles.next_page_number }}">Next &raquo;</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 {% endblock content %}

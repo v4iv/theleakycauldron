@@ -1,35 +1,63 @@
 {% extends "blog/base.html" %}
 {% load admin_static %}
-{% load staticfiles %}
+{% load static %}
 {% block content %}
-    <script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
-    <div class="inner">
-        <h2>{{ title }}</h2>
-        <section>
-            <form method="post" action="{% url 'about_me' %}" enctype="multipart/form-data" xmlns="http://www.w3.org/1999/html">
-                {% csrf_token %}
-                <div class="field half first">
-                    {{ about_form.display_picture }}
-                </div>
-                <div class="field half">
-                    <a id='calendarlink0' href="javascript:DateTimeShortcuts.openCalendar(0);">{{ about_form.dob }}</a>
-                </div>
-                <div class="field">
-                    {{ about_form.profession }}
-                </div>
-                <div class="field">
-                    {{ about_form.interests }}
-                </div>
-                <div class="field">
-                    {{ about_form.expertise }}
-                </div>
-                <div class="field">
-                    Resume Link : {{ about_form.resume }}
-                </div>
-                <ul class="actions">
-                    <li><input type="submit" value="Update" class="special"/></li>
-                </ul>
-            </form>
-        </section>
+    <!-- Page Header -->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
+            <h1>{{ title }}</h1>
+
+            <p>Update your profile</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Name</label>
+                            {{ form.name }}
+                            <p class="help-block text-danger">{{ form.name.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Display Picture</label>
+                            {{ form.display_picture }}
+
+                            <p class="help-block text-danger">{{ form.display_picture.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Content</label>
+                            {{ form.content }}
+
+                            <p class="help-block text-danger">{{ form.content.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Resume</label>
+                            {{ form.resume }}
+                            <p class="help-block text-danger">{{ form.resume.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <input class="btn btn-default" value="Publish" type="submit"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock content %}

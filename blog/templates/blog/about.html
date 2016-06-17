@@ -1,38 +1,28 @@
 {% extends "blog/base.html" %}
-{% load staticfiles %}
+{% load thumbnail %}
+{% load static %}
 {% block content %}
-    <div class="inner">
-        <img src="{{ about.display_picture.url }}" class="image left">
-        <header>
+    <!-- Jumbotron-->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
             <h1>{{ title }}</h1>
-        </header>
-        <section>
-            <blockquote>Hi, I am <strong>{{ about.user.get_full_name }}</strong> and I write <em>The Leaky Cauldron</em>.
-                I was
-                born
-                on {{ about.dob }} and I am
-                a {{ about.profession }} by profession and well versed at things like {{ about.expertise }} to say a
-                few, my
-                interests lie
-                at {{ about.interests }} etc. and you'll see my blog is filled with the things I am passionate about.
-                You can leave a message <a href="{% url 'contact_me' %}">here</a> or connect to me on <a
-                        href="#footer">social media.</a>
-            </blockquote>
-        </section>
-        <hr>
-        <footer>
-            <ul class="actions pull-right">
-                {% if user.is_authenticated %}
-                <li>
-                    <a href="{% url 'update_profile' pk=about.pk %}"
-                       class="button icon fa-pencil">Update</a>
-                </li>
-                {% endif %}
-                <li>
-                    <a href="{{ about.resume }}"
-                       class="button special icon fa-download" target="_blank">Résumé</a>
-                </li>
-            </ul>
-        </footer>
+
+            <p>My name is {{ about.name }} and this is what I do.</p>
+        </div>
     </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {% thumbnail about.display_picture "640x640" crop="center" as im %}
+                <img src="{{ im.url }}" class="img img-responsive img-circle center-block" alt="{{ about.name }}">
+                {% endthumbnail %}
+                <hr>
+                {{ about.content }}
+                <hr>
+                <a href="{{ about.resume }}" class="btn btn-group-justified btn-default fa fa-download">Résumé</a>
+            </div>
+        </div>
+    </div>s
 {% endblock content %}

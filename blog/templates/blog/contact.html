@@ -1,23 +1,61 @@
 {% extends "blog/base.html" %}
+{% load static %}
 {% block content %}
-    <div class="inner">
-        <h2>GET IN TOUCH</h2>
-        <section>
-            <form method="post" action="">
-                {% csrf_token %}
-                <div class="field half first">
-                    {{ contact_form.name }}
-                </div>
-                <div class="field half">
-                    {{ contact_form.email }}
-                </div>
-                <div class="field">
-                    {{ contact_form.message }}
-                </div>
-                <ul class="actions">
-                    <li><input type="submit" value="Send" class="special"/></li>
-                </ul>
-            </form>
-        </section>
+    <!-- Page Header -->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
+            <h1>{{ title }}</h1>
+
+            <p>Have questions? I have answers (maybe).</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>Want to get in touch with me? Fill out the form below to send me a message and I will try to get back
+                    to you within 24 hours!</p>
+
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <p class="help-block text-danger">Invalid Entries</p>
+                    {% endif %}
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Name</label>
+                            {{ form.name }}
+
+                            <p class="help-block text-danger">{{ form.name.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Email Address</label>
+                            {{ form.email }}
+
+                            <p class="help-block text-danger">{{ form.email.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Message</label>
+                            {{ form.message }}
+
+                            <p class="help-block text-danger">{{ form.message.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <input class="btn btn-group-justified btn-default" value="Send" type="submit"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock content %}

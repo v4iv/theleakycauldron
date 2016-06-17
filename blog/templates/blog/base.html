@@ -1,111 +1,96 @@
-<!DOCTYPE HTML>
-{% load staticfiles %}
-<html>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="utf-8">
     <meta name="theme-color" content="#585858">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'img/logo.svg' %}">
+
     <title>{{ title }} &middot; The Leaky Cauldron</title>
-    <meta name="author" content="Vaibhav Sharma">
-    <meta name="description"
-          content="The official blog of Artist and Developer, Vaibhav Sharma">
-    <meta name="keywords"
-          content="Vaibhav, Sharma,Vaibhav Sharma, The Leaky Cauldron, art, sketching, paintings, html5, web dev, design, ui, ux, android dev, mobile dev,digital art, digital,technology, coding, game dev, game development, dinosaurs, pub, blog, official blog,Sharma Vaibhav,NU, django, python">
-    <link href="{% static 'favicon.ico' %}" rel='icon' type='image/x-icon'/>
-    <!--[if lte IE 8]>
-    <script src="{% static 'assets/js/ie/html5shiv.js' %}"></script><![endif]-->
-    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" href="{% static 'assets/css/ie9.css' %}"/><![endif]-->
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="{% static 'assets/css/ie8.css' %}"/><![endif]-->
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+
+    <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+
+    <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+    <script src="{% static 'scripts/modernizr-2.6.2.js' %}" type="text/javascript"></script>
+    <script src="http://cdn.tinymce.com/4/tinymce.min.js" type="text/javascript"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body>
-<!-- Wrapper -->
-<div id="wrapper">
 
-    <!-- Header -->
-    <header id="header">
-        <div class="inner">
-
-            <!-- Logo -->
-            <a href="{% url 'home' %}" class="logo">
-                <span class="symbol"><img src="{% static 'images/logo.svg' %}" alt="the leaky cauldron"/></span><span
-                    class="title">The Leaky Cauldron</span>
-            </a>
-
-            <!-- Nav -->
-            <nav>
-                <ul>
-                    <li><a href="#menu">Menu</a></li>
-                </ul>
-            </nav>
-
+<body id="tron">
+<!-- NavBar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}">The Leaky Cauldron</a>
         </div>
-    </header>
-
-    <!-- Menu -->
-    <nav id="menu">
-        {% if user.is_authenticated %}
-            <h2>{{ user.username }}</h2>
-        {% else %}
-            <h2>Vaibhav Sharma</h2>
-        {% endif %}
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about_me' %}">About Me</a></li>
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'new_article' %}">Write</a></li>
-                <li><a href="{% url 'messages' %}">Messages</a></li>
-                <li><a href="{% url 'signout' %}">Sign Out</a></li>
-            {% else %}
-                <li><a href="{% url 'contact_me' %}">Contact</a></li>
-                <li><a href="{% url 'signin' %}">Sign In</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-
-    <!-- Main -->
-    <div id="main">
-        {% block content %}
-        {% endblock content %}
-    </div>
-
-    <!-- Footer -->
-    <footer id="footer">
-        <div class="inner">
-            <section>
-                <h2>Social</h2>
-                <ul class="icons">
-                    <li><a href="https://twitter.com/vaibhaved" class="icon style2 fa-twitter" target="_blank"><span
-                            class="label">Twitter</span></a>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'home' %}">HOME</a></li>
+                <li><a href="{% url 'about_me' %}">ABOUT</a></li>
+                <li><a href="{% url 'contact_me' %}">CONTACT</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'new_article' %}">WRITE</a></li>
+                    <li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">HI, {{ user.first_name.upper }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'update_profile' pk=1 %}">Update Profile</a></li>
+                            <li><a href="{% url 'messages' %}">Messages</a></li>
+                            <li><a href="{% url 'signout' %}">Sign Out</a></li>
+                        </ul>
                     </li>
-                    <li><a href="https://instagram.com/vaibhaved" class="icon style2 fa-instagram" target="_blank"><span
-                            class="label">Instagram</span></a>
+
+                {% else %}
+                    <li>
+                        <a href="{% url 'signin' %}">SIGN IN</a>
                     </li>
-                    <li><a href="https://github.com/v4iv" class="icon style2 fa-github" target="_blank"><span
-                            class="label">GitHub</span></a></li>
-                    <li><a href="mailto:vaibhav.sharma@st.niituniversity.in" class="icon style2 fa-envelope-o"
-                           target="_top"><span
-                            class="label">Email</span></a></li>
-                </ul>
-            </section>
-            <ul class="copyright">
-                <li>&copy; <a href="{% url 'home' %}">The Leaky Cauldron</a> {{ year }}. All rights reserved</li>
-                <li>Powered by <a href="https://www.djangoproject.com" target="_blank">Django</a></li>
+                {% endif %}
+
             </ul>
-        </div>
-    </footer>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav><!-- End NavBar -->
+{% block content %}
+{% endblock content %}
+<!--Footer-->
+<footer class="text-center">
+    <p class="copyright text-muted">Copyright &copy; <a href="{% url 'home' %}">The Leaky
+        Cauldron</a> {{ year }}. All rights reserved</p>
+</footer>
+<!--End Footer-->
+</div> <!-- /Container -->
 
-</div>
 
-<!-- Scripts -->
-<script src="{% static 'assets/js/jquery.min.js' %}"></script>
-<script src="{% static 'assets/js/skel.min.js' %}"></script>
-<script src="{% static 'assets/js/util.js' %}"></script>
-<!--[if lte IE 8]>
-<script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
-<script src="{% static 'assets/js/main.js' %}"></script>
-
+<!-- JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{% static 'scripts/respond.js' %}"></script>
+{% block scripts %}{% endblock %}
 </body>
+</html>
 </html>

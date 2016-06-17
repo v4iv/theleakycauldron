@@ -1,32 +1,53 @@
 {% extends "blog/base.html" %}
-{% load staticfiles %}
+{% load static %}
 {% block content %}
-    <div class="inner">
-        <img src="{% static 'images/neko.jpg' %}" class="image right">
+    <!-- Page Header -->
+    <div class="jumbotron" style="background: url('{% static 'img/banner.jpg' %}')">
+        <div class="container">
+            <h1>{{ title }}</h1>
 
-        <h1>{{ title }}</h1>
-        <section>
+            <p>For Staff Only!</p>
+        </div>
+    </div>
 
-            <form method="post" action="." enctype="multipart/form-data">
-                {% csrf_token %}
-                {% if form.errors %}
-                    <div class="alert alert-danger" role="alert"><p class="validation-summary-errors">Invalid Username
-                        or
-                        Password!</p></div>
-                {% endif %}
-                <div class="field half">
-                    {{ form.username }}
-                </div>
-                <div class="field half">
-                    {{ form.password }}
-                </div>
-                <div class="field half">
-                    <ul class="actions pull-right">
-                        <li><input type="hidden" name="next" value="/"/></li>
-                        <li><input type="submit" value="Sign In" class="button fit special"/></li>
-                    </ul>
-                </div>
-            </form>
-        </section>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-1">
+
+                <form method="post" action="." enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <p class="help-block text-danger">Invalid Username or Password!</p>
+                    {% endif %}
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Username</label>
+                            {{ form.username }}
+                            <p class="help-block text-danger">{{ form.username.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Password</label>
+                            {{ form.password }}
+                            <p class="help-block text-danger">{{ form.password.default_error_messages }}</p>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <input type="hidden" name="next" value="/"/>
+                            <input class="btn btn-group-justified btn-default" value="Sign In" type="submit"/>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
     </div>
 {% endblock content %}
